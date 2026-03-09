@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Deep Space Background */
+    --background: 224 71% 4%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Electric Blue Primary */
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 217 91% 60%;
+
+    --radius: 0.75rem;
+
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-sans: 'Inter', sans-serif;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: var(--font-sans);
+    background-image:
+      radial-gradient(circle at 50% 0%, hsl(217, 91%, 60%, 0.15), transparent 60%),
+      radial-gradient(circle at 0% 50%, hsl(260, 100%, 65%, 0.1), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    @apply tracking-tight;
+  }
+}
+
+@layer components {
+  .badge-available {
+    @apply inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-md;
+    background: hsla(217, 32%, 17%, 0.5);
+    color: hsl(210, 40%, 98%);
+    border: 1px solid hsla(217, 91%, 60%, 0.2);
+    box-shadow: 0 4px 20px -8px hsla(217, 91%, 60%, 0.3);
+  }
+
+  .badge-available::before {
+    content: '';
+    @apply w-2 h-2 rounded-full;
+    background: hsl(217, 91%, 60%);
+    box-shadow: 0 0 12px hsl(217, 91%, 60%);
+    animation: pulse-glow 2s infinite;
+  }
+
+  @keyframes pulse-glow {
+
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.7;
+      transform: scale(0.95);
+    }
+  }
+
+  .company-tag {
+    @apply inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300;
+    background: hsla(222, 47%, 11%, 0.5);
+    color: hsl(215, 20%, 80%);
+    border: 1px solid hsla(217, 32%, 17%, 0.8);
+  }
+
+  .company-tag:hover {
+    background: hsla(217, 91%, 60%, 0.1);
+    border-color: hsla(217, 91%, 60%, 0.4);
+    color: hsl(210, 40%, 98%);
+    transform: translateY(-2px);
+  }
+
+  .experience-card {
+    @apply p-6 rounded-2xl transition-all duration-300;
+    background: hsla(222, 47%, 11%, 0.4);
+    border: 1px solid hsla(217, 32%, 17%, 0.5);
+    backdrop-filter: blur(10px);
+  }
+
+  .experience-card:hover {
+    border-color: hsla(217, 91%, 60%, 0.3);
+    background: hsla(222, 47%, 11%, 0.7);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px -10px hsla(0, 0%, 0%, 0.5);
+  }
+
+  .skill-strong {
+    @apply flex items-center gap-2 text-sm font-medium;
+    color: hsl(217, 91%, 70%);
+  }
+
+  .skill-moderate {
+    @apply flex items-center gap-2 text-sm;
+    color: hsl(215, 20%, 80%);
+  }
+
+  .skill-gap {
+    @apply flex items-center gap-2 text-sm;
+    color: hsl(215, 20%, 50%);
+  }
+
+  .skill-bar-track {
+    @apply w-full h-2 rounded-full;
+    background: hsla(217, 32%, 17%, 0.8);
+  }
+
+  .skill-bar-fill {
+    @apply h-full rounded-full;
+    transition: width 1s ease-out;
+  }
+
+  .skill-bar-fill--strong {
+    background: linear-gradient(90deg, hsl(217, 91%, 60%), hsl(217, 91%, 70%));
+    box-shadow: 0 0 8px hsla(217, 91%, 60%, 0.3);
+  }
+
+  .skill-bar-fill--moderate {
+    background: hsl(215, 20%, 55%);
+  }
+
+  .skill-bar-fill--gap {
+    background: hsl(215, 15%, 35%);
+  }
+
+  .scroll-indicator {
+    @apply flex flex-col items-center gap-3;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(8px);
+    }
+  }
+
+  .section-title {
+    @apply text-3xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70;
+    font-family: var(--font-heading);
+  }
+
+  .nav-link {
+    @apply text-muted-foreground hover:text-foreground hover:bg-white/5 px-3 py-2 rounded-md transition-all text-sm font-medium;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all shadow-lg shadow-blue-500/20;
+    background: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(225, 80%, 55%));
+    color: white;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px hsla(217, 91%, 60%, 0.4);
+    filter: brightness(1.1);
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all;
+    background: transparent;
+    color: hsl(210, 40%, 98%);
+    border: 1px solid hsla(217, 32%, 17%, 0.8);
+  }
+
+  .btn-outline:hover {
+    border-color: hsla(217, 91%, 60%, 0.5);
+    background: hsla(217, 91%, 60%, 0.05);
+  }
+
+  .new-badge {
+    @apply absolute -top-2 -right-2 px-2 py-0.5 text-[10px] uppercase tracking-wider font-bold rounded-full shadow-lg;
+    background: linear-gradient(135deg, hsl(260, 100%, 65%), hsl(280, 100%, 60%));
+    color: white;
+  }
+}
