@@ -1,0 +1,66 @@
+{
+  "updatedAt": "2026-04-09T00:00:00.000Z",
+  "source": "GitHub Trending snapshot",
+  "repos": [
+    {
+      "id": 1,
+      "name": "codex",
+      "owner": "openai",
+      "description": "A coding assistant workflow for agentic software development.",
+      "url": "https://github.com/openai/codex",
+      "stars": 18200,
+      "language": "TypeScript",
+      "starsThisWeek": 420
+    },
+    {
+      "id": 2,
+      "name": "ai",
+      "owner": "vercel",
+      "description": "The AI SDK for building modern AI-powered applications.",
+      "url": "https://github.com/vercel/ai",
+      "stars": 24800,
+      "language": "TypeScript",
+      "starsThisWeek": 360
+    },
+    {
+      "id": 3,
+      "name": "playwright",
+      "owner": "microsoft",
+      "description": "Reliable end-to-end testing for modern web apps.",
+      "url": "https://github.com/microsoft/playwright",
+      "stars": 69000,
+      "language": "TypeScript",
+      "starsThisWeek": 290
+    },
+    {
+      "id": 4,
+      "name": "expo",
+      "owner": "expo",
+      "description": "A framework for creating universal native apps with React.",
+      "url": "https://github.com/expo/expo",
+      "stars": 42000,
+      "language": "TypeScript",
+      "starsThisWeek": 250
+    },
+    {
+      "id": 5,
+      "name": "langgraph",
+      "owner": "langchain-ai",
+      "description": "Building stateful agentic workflows with LLMs.",
+      "url": "https://github.com/langchain-ai/langgraph",
+      "stars": 15000,
+      "language": "Python",
+      "starsThisWeek": 230
+    },
+    {
+      "id": 6,
+      "name": "ui",
+      "owner": "shadcn-ui",
+      "description": "Re-usable components built with Radix UI and Tailwind CSS.",
+      "url": "https://github.com/shadcn-ui/ui",
+      "stars": 79000,
+      "language": "TypeScript",
+      "starsThisWeek": 210
+    }
+  ]
+}

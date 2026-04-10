@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageSquare, Send, X, User, Bot } from "lucide-react";
+import { MessageSquare, Send, User, Bot } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -17,17 +17,26 @@ type Message = {
   content: string;
 };
 
-// Uses Vercel API route by default. Set VITE_API_URL to override (e.g. for Supabase).
+type AIChatDialogProps = {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  showTrigger?: boolean;
+};
+
 const CHAT_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/chat`
   : "/api/chat";
 
-const AIChatDialog = () => {
-  const [open, setOpen] = useState(false);
+const AIChatDialog = ({ open, onOpenChange, showTrigger = true }: AIChatDialogProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const isControlled = open !== undefined;
+  const dialogOpen = isControlled ? open : internalOpen;
+  const handleOpenChange = onOpenChange ?? setInternalOpen;
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -38,9 +47,7 @@ const AIChatDialog = () => {
   const streamChat = async (userMessages: Message[]) => {
     const response = await fetch(CHAT_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ messages: userMessages }),
     });
 
@@ -113,10 +120,7 @@ const AIChatDialog = () => {
       console.error("Chat error:", error);
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content: "Sorry, I encountered an error. Please try again.",
-        },
+        { role: "assistant", content: "Sorry, I encountered an error. Please try again." },
       ]);
     } finally {
       setIsLoading(false);
@@ -131,22 +135,24 @@ const AIChatDialog = () => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <button className="btn-primary">
-          <MessageSquare className="w-5 h-5" />
-          Ask AI About Me
-        </button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] h-[600px] flex flex-col p-0 gap-0 bg-card border-border">
-        <DialogHeader className="px-6 py-4 border-b border-border">
-          <DialogTitle className="flex items-center gap-2 font-heading">
-            <MessageSquare className="w-5 h-5 text-primary" />
+    <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
+      {showTrigger && (
+        <DialogTrigger asChild>
+          <button className="btn-primary">
+            <MessageSquare className="w-4 h-4" />
+            Ask AI About Me
+          </button>
+        </DialogTrigger>
+      )}
+      <DialogContent className="sm:max-w-[480px] h-[560px] flex flex-col p-0 gap-0 bg-background border-border">
+        <DialogHeader className="px-5 py-3 border-b border-border">
+          <DialogTitle className="flex items-center gap-2 font-heading text-base">
+            <MessageSquare className="w-4 h-4 text-muted-foreground" />
             {chatTitle}
           </DialogTitle>
         </DialogHeader>
 
-        <ScrollArea className="flex-1 px-6 py-4" ref={scrollRef}>
+        <ScrollArea className="flex-1 px-5 py-4" ref={scrollRef}>
           {messages.length === 0 ? (
             <div className="space-y-4">
               <p className="text-muted-foreground text-sm">
@@ -160,7 +166,7 @@ const AIChatDialog = () => {
                   <button
                     key={q}
                     onClick={() => handleSend(q)}
-                    className="block w-full text-left text-sm p-3 rounded-lg border border-border hover:bg-accent/50 transition-colors"
+                    className="block w-full text-left text-sm p-3 rounded-md border border-border hover:bg-muted transition-colors"
                   >
                     {q}
                   </button>
@@ -172,22 +178,22 @@ const AIChatDialog = () => {
               {messages.map((msg, i) => (
                 <div
                   key={i}
-                  className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"
-                    }`}
+                  className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   {msg.role === "assistant" && (
-                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                      <Bot className="w-4 h-4 text-primary" />
+                    <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+                      <Bot className="w-3.5 h-3.5 text-muted-foreground" />
                     </div>
                   )}
                   <div
-                    className={`max-w-[80%] rounded-lg px-4 py-2 ${msg.role === "user"
-                        ? "bg-primary text-primary-foreground"
+                    className={`max-w-[80%] rounded-md px-3 py-2 ${
+                      msg.role === "user"
+                        ? "bg-foreground text-background"
                         : "bg-muted"
-                      }`}
+                    }`}
                   >
                     {msg.role === "assistant" ? (
-                      <div className="prose prose-sm prose-invert max-w-none">
+                      <div className="prose prose-sm max-w-none dark:prose-invert">
                         <ReactMarkdown>{msg.content}</ReactMarkdown>
                       </div>
                     ) : (
@@ -195,22 +201,22 @@ const AIChatDialog = () => {
                     )}
                   </div>
                   {msg.role === "user" && (
-                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-                      <User className="w-4 h-4" />
+                    <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+                      <User className="w-3.5 h-3.5 text-muted-foreground" />
                     </div>
                   )}
                 </div>
               ))}
               {isLoading && messages[messages.length - 1]?.role === "user" && (
                 <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                    <Bot className="w-4 h-4 text-primary" />
+                  <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center">
+                    <Bot className="w-3.5 h-3.5 text-muted-foreground" />
                   </div>
-                  <div className="bg-muted rounded-lg px-4 py-2">
+                  <div className="bg-muted rounded-md px-3 py-2">
                     <div className="flex gap-1">
-                      <span className="w-2 h-2 bg-primary/50 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                      <span className="w-2 h-2 bg-primary/50 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                      <span className="w-2 h-2 bg-primary/50 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                      <span className="w-1.5 h-1.5 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                      <span className="w-1.5 h-1.5 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                      <span className="w-1.5 h-1.5 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                     </div>
                   </div>
                 </div>
@@ -228,7 +234,7 @@ const AIChatDialog = () => {
               onKeyDown={handleKeyDown}
               placeholder="Ask about my experience..."
               aria-label="Ask a question"
-              className="flex-1 bg-background border border-border rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="flex-1 bg-background border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-foreground/20"
               disabled={isLoading}
             />
             <Button

@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Loader2, Send, Sparkles } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import { fitCheckStrongExample, fitCheckWeakExample } from "@/config/resume-data";
 
-// Uses Vercel API route by default. Set VITE_API_URL to override.
 const FIT_CHECK_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/fit-check`
   : "/api/fit-check";
@@ -28,9 +27,7 @@ const FitCheck = () => {
     try {
       const response = await fetch(FIT_CHECK_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ jobDescription }),
       });
 
@@ -90,47 +87,39 @@ const FitCheck = () => {
   };
 
   return (
-    <section id="fit-check" className="py-24 px-6">
-      <div className="max-w-4xl mx-auto">
+    <section id="fit-check" className="py-20 px-6 border-t border-border">
+      <div className="max-w-3xl mx-auto">
         <h2 className="section-title">Honest Fit Assessment</h2>
-        <p className="text-muted-foreground mb-8 max-w-2xl">
-          Paste a job description. Get an honest assessment of whether I'm the right person—including when I'm not.
+        <p className="text-sm text-muted-foreground mb-8 max-w-2xl leading-relaxed">
+          Paste a job description. Get an honest assessment of whether I'm the right person — including when I'm not.
         </p>
 
-        <div className="flex gap-4 mb-6">
-          <button
-            onClick={() => loadExample("strong")}
-            className="btn-outline text-sm py-2 px-4"
-          >
+        <div className="flex gap-3 mb-6">
+          <button onClick={() => loadExample("strong")} className="btn-outline text-xs py-1.5 px-3">
             Strong Fit Example
           </button>
-          <button
-            onClick={() => loadExample("weak")}
-            className="btn-outline text-sm py-2 px-4"
-          >
+          <button onClick={() => loadExample("weak")} className="btn-outline text-xs py-1.5 px-3">
             Weak Fit Example
           </button>
         </div>
 
-        <div className="experience-card">
-          <label className="block text-sm text-muted-foreground mb-3">
+        <div>
+          <label className="block text-xs text-muted-foreground mb-2">
             Job description to analyze
           </label>
           <textarea
             value={jobDescription}
             onChange={(e) => setJobDescription(e.target.value)}
-            className="w-full h-40 bg-background border border-border rounded-lg p-4 text-foreground resize-none focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full h-36 bg-background border border-border rounded-md p-4 text-sm text-foreground resize-none focus:outline-none focus:ring-1 focus:ring-foreground/20"
             placeholder="Paste a job description here..."
           />
-          
-          {error && (
-            <p className="text-destructive text-sm mt-2">{error}</p>
-          )}
+
+          {error && <p className="text-destructive text-xs mt-2">{error}</p>}
 
           <Button
             onClick={analyzeJob}
             disabled={isLoading || !jobDescription.trim()}
-            className="mt-4"
+            className="mt-3"
           >
             {isLoading ? (
               <>
@@ -138,26 +127,19 @@ const FitCheck = () => {
                 Analyzing...
               </>
             ) : (
-              <>
-                <Sparkles className="w-4 h-4 mr-2" />
-                Analyze Fit
-              </>
+              "Analyze Fit"
             )}
           </Button>
         </div>
 
         {analysis && (
-          <div className="mt-8 experience-card">
-            <h3 className="text-lg font-semibold mb-4 text-primary flex items-center gap-2">
-              <Sparkles className="w-5 h-5" />
-              Fit Analysis
-            </h3>
-            <div className="prose prose-invert prose-sm max-w-none">
+          <div className="mt-8 border-t border-border pt-6">
+            <h3 className="text-sm font-semibold mb-4 font-heading">Fit Analysis</h3>
+            <div className="prose prose-sm max-w-none dark:prose-invert">
               <ReactMarkdown>{analysis}</ReactMarkdown>
             </div>
           </div>
         )}
-
       </div>
     </section>
   );
