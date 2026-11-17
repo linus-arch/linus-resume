@@ -64,11 +64,13 @@ cp .env.example .env       # then add your OPENAI_API_KEY
 npm run dev                 # http://localhost:8080
 ```
 
+The browser only calls the same-origin `/api/chat` route. The OpenAI key is read exclusively by the server from `process.env.OPENAI_API_KEY`; never use a `VITE_` prefix for it.
+
 For AI chat to work locally, you need the [Vercel CLI](https://vercel.com/docs/cli):
 
 ```bash
 vercel env pull .env.local  # pulls env vars from Vercel
-vercel dev                  # runs Vite + API routes locally
+vercel dev                  # runs the site and API routes locally
 ```
 
 ## Project Structure

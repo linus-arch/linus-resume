@@ -1,112 +1,67 @@
-import { useEffect, useState } from "react";
-import {
-  ChevronDown,
-  Brain,
-  Code2,
-  Database,
-  Headphones,
-  Sparkles,
-  Workflow,
-  Feather,
-  Bot,
-  TerminalSquare,
-  Layers3,
-  PanelsTopLeft,
-} from "lucide-react";
-import AIChatDialog from "./AIChatDialog";
-import { heroQuotes, personal } from "@/config/resume-data";
-
-const workingWithItems = [
-  { label: "React", icon: Code2 },
-  { label: "TypeScript", icon: TerminalSquare },
-  { label: "AI/LLM", icon: Bot },
-  { label: "Cognitive Science", icon: Brain },
-  { label: "Supabase", icon: Database },
-  { label: "Tailwind CSS", icon: PanelsTopLeft },
-  { label: "Framer Motion", icon: Sparkles },
-  { label: "Ableton", icon: Headphones },
-  { label: "Prompt Engineering", icon: Workflow },
-  { label: "Research", icon: Feather },
-  { label: "Design Systems", icon: Layers3 },
-];
+import { useEffect, useRef } from "react";
+import { GradientBackground } from "@/components/ui/noisy-gradient-backgrounds";
 
 const Hero = () => {
-  const [quoteIndex, setQuoteIndex] = useState(0);
-  const [isFading, setIsFading] = useState(false);
+  const signalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!heroQuotes.length) {
+    const signal = signalRef.current;
+    if (!signal || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
 
-    let timeoutId: number | undefined;
+    const handlePointerMove = (event: PointerEvent) => {
+      const bounds = signal.getBoundingClientRect();
+      const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2;
+      const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2;
+      signal.style.setProperty("--signal-x", `${x * 18}px`);
+      signal.style.setProperty("--signal-y", `${y * 12}px`);
+    };
 
-    const interval = window.setInterval(() => {
-      setIsFading(true);
-      timeoutId = window.setTimeout(() => {
-        setQuoteIndex((currentIndex) => (currentIndex + 1) % heroQuotes.length);
-        setIsFading(false);
-      }, 350);
-    }, 8000);
+    const resetPointer = () => {
+      signal.style.setProperty("--signal-x", "0px");
+      signal.style.setProperty("--signal-y", "0px");
+    };
+
+    signal.addEventListener("pointermove", handlePointerMove);
+    signal.addEventListener("pointerleave", resetPointer);
 
     return () => {
-      window.clearInterval(interval);
-      if (timeoutId !== undefined) {
-        window.clearTimeout(timeoutId);
-      }
+      signal.removeEventListener("pointermove", handlePointerMove);
+      signal.removeEventListener("pointerleave", resetPointer);
     };
   }, []);
 
   return (
-    <section className="hero-shell relative min-h-screen flex flex-col justify-center px-6 pt-20 pb-28">
-      <div className="hero-noise" />
-      <div className="max-w-6xl mx-auto w-full relative z-10">
-        <div className="badge-available mb-8">
-          {personal.availability}
+    <section className="score-hero">
+      <GradientBackground />
+      <div className="signal-field" ref={signalRef} aria-hidden="true">
+        <div className="signal-field__halo" />
+        <div className="signal-field__rings">
+          <span />
+          <span />
+          <span />
         </div>
-
-        <h1 className="text-4xl sm:text-6xl md:text-8xl font-heading font-bold mb-6 tracking-tight">
-          {personal.name}
+        <div className="signal-field__wave">
+          {Array.from({ length: 28 }, (_, index) => (
+            <i key={index} style={{ "--bar-index": index } as React.CSSProperties} />
+          ))}
+        </div>
+        <div className="signal-field__axis signal-field__axis--horizontal" />
+        <div className="signal-field__axis signal-field__axis--vertical" />
+      </div>
+      <div className="score-hero__body">
+        <p className="score-kicker">Cognitive scientist + AI developer + Electronic Music Producer</p>
+        <h1>
+          Linus
+          <br />
+          Thofte<span className="score-hero__period">.</span>
         </h1>
-
-        <h2 className="text-2xl md:text-3xl font-heading text-muted-foreground mb-4">
-          {personal.title}
-        </h2>
-
-        <p
-          className={`hero-quote max-w-3xl text-lg sm:text-xl md:text-2xl text-muted-foreground mb-10 transition-all duration-500 ${
-            isFading ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
-          }`}
-        >
-          {heroQuotes[quoteIndex] ?? personal.tagline}
+        <p className="score-hero__intro">
+          I turn research, technology, and creative practice into clearer ways for people to learn, decide, and make.
         </p>
-
-        <div className="working-with-block mb-10">
-          <div className="working-with-label">Working with</div>
-          <div className="working-with-marquee" aria-hidden="true">
-            <div className="working-with-track">
-              {[...workingWithItems, ...workingWithItems].map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <span key={`${item.label}-${index}`} className="working-with-item">
-                    <Icon className="h-4 w-4" />
-                    <span>{item.label}</span>
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        <AIChatDialog />
       </div>
 
-      <div className="scroll-indicator absolute bottom-12 left-1/2 -translate-x-1/2">
-        <span className="text-xs uppercase tracking-widest text-muted-foreground">
-          Scroll to explore
-        </span>
-        <ChevronDown className="w-5 h-5 text-muted-foreground" />
-      </div>
     </section>
   );
 };

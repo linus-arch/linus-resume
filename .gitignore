@@ -33,3 +33,4 @@ rafs-ai-resume/
 *.njsproj
 *.sln
 *.sw?
+.vercel

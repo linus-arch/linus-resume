@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { OpenExploration } from "@/config/resume-data";
 
-interface OpenExplorationCardProps extends OpenExploration {}
+type OpenExplorationCardProps = OpenExploration;
 
 const OpenExplorationCard = ({
   title,
@@ -34,7 +34,7 @@ const OpenExplorationCard = ({
               target="_blank"
               rel="noopener noreferrer"
               className="relative block overflow-hidden h-48 bg-muted"
-              aria-label={`Open ${title}`}
+              aria-label={`Visit site: ${title}`}
             >
               <img
                 src={image}
@@ -83,7 +83,7 @@ const OpenExplorationCard = ({
               variant="outline"
               size="sm"
               onClick={() => setOpen(true)}
-              className="w-full"
+              className="w-full exploration-more"
             >
               Show more
             </Button>

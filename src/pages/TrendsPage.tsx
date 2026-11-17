@@ -6,6 +6,7 @@ const TrendsPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto px-6 pt-28">
+        <h1 className="sr-only">GitHub trends</h1>
         <Link to="/" className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors mb-8">
           <ArrowLeft className="w-3.5 h-3.5" />
           Back

@@ -6,9 +6,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Index from "./pages/Index";
 import Music from "@/components/Music";
-import MusicCollection from "./pages/MusicCollection";
 import TrendsPage from "./pages/TrendsPage";
 import NotFound from "./pages/NotFound";
+import ReleasesPage from "./pages/ReleasesPage";
+import ReleasePage from "./pages/ReleasePage";
+import TravelPage from "./pages/TravelPage";
 
 const queryClient = new QueryClient();
 
@@ -18,16 +20,19 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <a className="skip-link" href="#main-content">Skip to content</a>
         <Navbar />
-        <main>
+        <div id="main-content">
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/music" element={<Music />} />
-            <Route path="/music/:slug" element={<MusicCollection />} />
+            <Route path="/music" element={<><h1 className="sr-only">Music</h1><Music /></>} />
+            <Route path="/releases" element={<ReleasesPage />} />
+            <Route path="/releases/:slug" element={<ReleasePage />} />
+            <Route path="/travel" element={<TravelPage />} />
             <Route path="/trends" element={<TrendsPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </main>
+        </div>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -170,7 +170,7 @@ In terms of direction, the roadmap is centered on deepening user value rather th
 ### Bottom Line
 Kioku is a strong example of thoughtful AI product design: technology in service of a deeply human need. It is the kind of project that sparks conversation because it combines practical utility with emotional resonance, and shows how AI can support people in ways that feel personal and meaningful.`,
       image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1200&h=800&fit=crop",
-      link: "https://kioku.ai",
+      link: "https://kioku-main.vercel.app/",
     },
   },
   {
@@ -211,8 +211,7 @@ export const openExplorations: OpenExploration[] = [
     title: "Dawk",
     tagline:
       "DAWK turns passive YouTube tutorials into interactive, hands-on lessons inside Ableton so producers learn by doing, not just watching.",
-    image:
-      "dawk_screenshot.png",
+    image: "/explorations/dawk.png",
     collaboratorsNeeded: ["Max for Live Developer", "Music Producer", "AI Workflow Engineer"],
     showMore: {
       description: `The Problem
@@ -235,28 +234,26 @@ Learn - Step through the lesson: CONCEPT (why), AUTO (executes in Ableton), HAND
     },
   },
   {
-    title: "Haptic Interface For Embodied Learning",
-    tagline: "A wearable interface for embodied intelligence and learning",
+    title: "Wearable Haptic Device for Enhanced Learning",
+    tagline: "Bachelor's project exploring how wearable haptic feedback can support the learning of bodily skills.",
     image: "",
-    collaboratorsNeeded: ["Hardware Engineer", "Haptic Designer", "Cognitive Scientist"],
+    collaboratorsNeeded: [],
     showMore: {
-      description: `A Different Way of Learning
+      description: `This bachelor's project explores a wearable haptic device for enhanced learning, with a focus on bodily skills and embodied interaction.
 
-Learning a physical skill has always required time, repetition, and guidance. Whether playing the piano or mastering a movement in sport, the body must gradually align itself with an ideal pattern—often through trial, error, and external correction.
+The proposed system uses AI to guide and assist learning through a haptic interface. It combines movement tracking, real-time tactile feedback, and adaptive support to supplement the visual or auditory guidance normally provided by a teacher.
 
-This project explores a different paradigm:
-What if guidance could be felt directly in the body?
+The device is envisioned as a wearable tutor: it can help learners become more aware of their movement, indicate differences between an intended and performed action, and provide physical cues that support correction and skill development. The project is an exploratory interaction-design study of how emerging technology could make learning more immediate, personalized, and embodied.
 
-Instead of observing, interpreting, and correcting, the learner engages in a form of co-adaptive interaction—where an intelligent system and the human body collaborate in real time. The glove becomes not just a tool, but a mediator between intention and execution, between knowledge and movement.
-
-Grounded in principles of embodied cognition and haptics, the system treats learning not as abstract instruction, but as sensorimotor experience. The body does not just follow instructions—it understands through sensations`,
-      stage: "Early Prototype",
+Read the bachelor's project in the Linköping University repository.`,
+      stage: "Bachelor's Project",
+      link: "https://liu.diva-portal.org/smash/record.jsf?dswid=6213&pid=diva2%3A1828094&c=1&searchType=UNDERGRADUATE&language=sv&query=&af=%5B%5D&aq=%5B%5B%7B%22freeText%22%3A%22linus+thofte%22%7D%5D%5D&aq2=%5B%5B%5D%5D&aqe=%5B%5D&noOfRows=50&sortOrder=author_sort_asc&sortOrder2=title_sort_asc&onlyFullText=false&sf=all",
     },
   },
   {
     title: "Weave",
-    tagline: "A living memory layer for events that keeps coordination, story, and reflection together.",
-    image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&h=400&fit=crop",
+    tagline: "Weave is a living layer for events: a place to plan together, contribute in the moment, and turn fragments into memories that remain open to revisiting.",
+    image: "/explorations/weave.jpg",
     collaboratorsNeeded: ["Product Designer", "Full-Stack Developer", "AI/LLM Specialist"],
     showMore: {
       description: `Weave is an event creation tool.
@@ -371,7 +368,7 @@ And when enough threads are gathered, shared, and preserved, they form something
   {
     title: "Portfolio Website",
     tagline: "Portfolio website for photographer Nils.",
-    image: "https://image.thum.io/get/width/1200/crop/700/https://nilsarneberg.space/",
+    image: "/explorations/portfolio-website.png",
     collaboratorsNeeded: ["Photography", "Portfolio Design"],
     hideShowMore: true,
     showMore: {
@@ -382,31 +379,35 @@ And when enough threads are gathered, shared, and preserved, they form something
       link: "https://nilsarneberg.space/",
     },
   },
+  {
+    title: "Vibable",
+    tagline: "Vibe code hardware products from an idea into a working design.",
+    image: "/explorations/vibable.png",
+    collaboratorsNeeded: [],
+    showMore: {
+      description: `Vibable is a Lovable project for vibe coding hardware products. It helps turn an idea into a concrete, buildable hardware design through an intuitive, AI-assisted workflow.`,
+      stage: "Prototype",
+      link: "https://logic-nexus-engine.lovable.app",
+    },
+  },
+  {
+    title: "Atlas of Unbuilt Things",
+    tagline: "Find the gaps in science and turn unexplored research into buildable prototypes for future technology.",
+    image: "/explorations/atlas-of-unbuilt-things-new.png",
+    collaboratorsNeeded: ["Researcher", "Product Designer", "Hardware or AI Engineer"],
+    showMore: {
+      description: `Atlas of Unbuilt Things finds research papers and gaps in science, then converts unexplored areas into buildable prototypes for future technology.
+
+It creates a bridge between discovery and making: surfacing questions that have not yet been developed into products, translating them into concrete design opportunities, and giving those ideas a path toward physical or digital prototypes.
+
+Designs from the Atlas can be opened in Vibable, where they can be explored and developed as vibe-coded hardware products.`,
+      stage: "Early Prototype",
+      link: "https://claude.ai/artifact/Gudpgt6nm7v5WLoTpnck2p",
+    },
+  },
 ];
 
 // --- Music ---
-
-export type MusicCollection = {
-  slug: "linus" | "urhymn";
-  title: string;
-  subtitle: string;
-  coverImage: string;
-};
-
-export const musicCollections: MusicCollection[] = [
-  {
-    slug: "linus",
-    title: "Linus",
-    subtitle: "Personal sketches, textures, and process tracks",
-    coverImage: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1400&h=1600&fit=crop",
-  },
-  {
-    slug: "urhymn",
-    title: "Urhymn",
-    subtitle: "Ritual pulse, cinematic low-end, and red-room energy",
-    coverImage: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1400&h=1600&fit=crop",
-  },
-];
 
 export type MusicTrack = {
   title: string;
@@ -414,6 +415,71 @@ export type MusicTrack = {
   coverImage: string;
   audioUrl: string;
 };
+
+export type ReleasePost = {
+  slug: string;
+  title: string;
+  artist: string;
+  releaseType: "single" | "ep" | "album";
+  releaseDate: string;
+  coverImage: string;
+  description: string;
+  tracks: string[];
+  links: {
+    spotify?: string;
+    appleMusic?: string;
+    bandcamp?: string;
+    landr?: string;
+  };
+};
+
+// Add a new release here. The release archive and detail pages update automatically.
+export const releasePosts: ReleasePost[] = [
+  {
+    slug: "night-tape",
+    title: "Night Tape",
+    artist: "Linus Thofte",
+    releaseType: "single",
+    releaseDate: "2026-01-01",
+    coverImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1200&h=1200&fit=crop",
+    description: "A late-night sketch built from soft edges, room tone, and a pulse that stays just below the surface.",
+    tracks: ["Night Tape"],
+    links: {},
+  },
+  {
+    slug: "glass-rooms",
+    title: "Glass Rooms",
+    artist: "Linus Thofte",
+    releaseType: "single",
+    releaseDate: "2026-01-01",
+    coverImage: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1200&h=1200&fit=crop",
+    description: "A study in reflection, distance, and the small details that remain after the room goes quiet.",
+    tracks: ["Glass Rooms"],
+    links: {},
+  },
+  {
+    slug: "soft-voltage",
+    title: "Soft Voltage",
+    artist: "Linus Thofte",
+    releaseType: "single",
+    releaseDate: "2026-01-01",
+    coverImage: "https://images.unsplash.com/photo-1461784121038-f088ca1e7714?w=1200&h=1200&fit=crop",
+    description: "Textural electronics and a restrained sense of movement, shaped as a process track rather than a finished statement.",
+    tracks: ["Soft Voltage"],
+    links: {},
+  },
+  {
+    slug: "half-light",
+    title: "Half Light",
+    artist: "Linus Thofte",
+    releaseType: "single",
+    releaseDate: "2026-01-01",
+    coverImage: "https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=1200&h=1200&fit=crop",
+    description: "A fragment from the border between movement and stillness.",
+    tracks: ["Half Light"],
+    links: {},
+  },
+];
 
 export const musicTracks: MusicTrack[] = [
   {
@@ -468,6 +534,55 @@ export const gapSkills: Skill[] = [
   { name: "Automated Testing (Jest, Playwright)", level: 25 },
   { name: "DevOps & CI/CD", level: 20 },
   { name: "Containerization (Docker)", level: 15 },
+];
+
+export type ToolGroup = {
+  category: "Music" | "UX" | "Coding";
+  description: string;
+  tools: string[];
+};
+
+export const toolGroups: ToolGroup[] = [
+  {
+    category: "Music",
+    description: "Sound design, arrangement, recording, and the small decisions that make an idea move.",
+    tools: ["Ableton Live", "Logic Pro X", "Max for Live", "Sound design", "Arrangement"],
+  },
+  {
+    category: "UX",
+    description: "Turning complex systems into interfaces people can read, use, and return to.",
+    tools: ["Figma", "Adobe Creative Suite", "UX research", "Prototyping"],
+  },
+  {
+    category: "Coding",
+    description: "Product-minded implementation across the interface, data, and AI layers.",
+    tools: ["TypeScript", "React", "Next.js", "Vite", "Supabase", "PostgreSQL", "AI SDK", "Tailwind CSS"],
+  },
+];
+
+export type MusicDestination = {
+  slug: string;
+  title: string;
+  descriptor: string;
+  url: string;
+  color: "red" | "blue";
+};
+
+export const musicDestinations: MusicDestination[] = [
+  {
+    slug: "urhymn",
+    title: "Urhymn",
+    descriptor: "A pulse-forward home for releases, rituals, and red-room energy.",
+    url: "https://urhymn.se",
+    color: "red",
+  },
+  {
+    slug: "futurhymn",
+    title: "Futurhymn",
+    descriptor: "A wider field for future-facing sound, sketches, and collaboration.",
+    url: "https://futurhymn.space",
+    color: "blue",
+  },
 ];
 
 // --- Certifications ---

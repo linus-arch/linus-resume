@@ -1,0 +1,248 @@
+{
+  "url": "http://127.0.0.1:4400/",
+  "errors": [],
+  "failed": [],
+  "desktop": {
+    "loadMs": 998,
+    "loaderMs": null,
+    "settledMs": 3176,
+    "vitals": {
+      "lcpMs": 208,
+      "lcpElement": "h1",
+      "cls": 0.004
+    },
+    "height": 8079,
+    "overflowX": false,
+    "offenders": [],
+    "h1": [
+      "Linus\nThofte."
+    ],
+    "smallTargets": [
+      "LT\n. 20x44",
+      "Work 32x20",
+      "About 35x20",
+      "Music 35x20",
+      "Tools 31x20",
+      "Ask AI about me 116x20",
+      "Browse the process archi 185x20",
+      "Let's talk 84x23"
+    ],
+    "glHidden": [],
+    "title": "Linus Thofte — cognition, code, sound",
+    "glOn": false,
+    "scrollFps": {
+      "fps": 60,
+      "worstFrameMs": 17
+    },
+    "nav": {
+      "href": "/music/urhymn",
+      "scrollYAfter": 708,
+      "title": "Linus Thofte — cognition, code, sound"
+    },
+    "idleMotion": true,
+    "idleAt": "top"
+  },
+  "mobile": {
+    "throttled": true,
+    "loadMs": 1310,
+    "loaderMs": null,
+    "settledMs": 3296,
+    "vitals": {
+      "lcpMs": 1400,
+      "lcpElement": "h1",
+      "cls": 0.001
+    },
+    "height": 8857,
+    "overflowX": false,
+    "offenders": [],
+    "h1": [
+      "Linus\nThofte."
+    ],
+    "smallTargets": [
+      "LT\n. 20x44",
+      "Ask AI about me 116x20",
+      "Browse the process archi 185x20",
+      "Let's talk 84x23",
+      "EMAIL ME 64x12",
+      "LINKEDIN 64x12",
+      "GITHUB 52x12"
+    ],
+    "glHidden": [],
+    "title": "Linus Thofte — cognition, code, sound",
+    "glOn": false,
+    "scrollFps": {
+      "fps": 60,
+      "worstFrameMs": 17
+    }
+  },
+  "files": [
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-00-firstpaint.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-01-hero.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-02-scroll.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-03-scroll.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-04-scroll.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-05-scroll.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-06-scroll.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-07-scroll.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-90-transition-a.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-90-transition-b.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-90-transition-c.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-91-after-nav.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/d-92-back.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/k-01-focus.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/k-02-focus.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/k-03-focus.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/k-04-focus.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-01-rest.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-01-hover.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-02-rest.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-02-hover.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-03-rest.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-03-hover.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-04-rest.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-04-hover.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-05-rest.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-05-hover.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-06-rest.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-06-hover.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-07-rest.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/h-07-hover.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/m-01-hero.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/m-02-scroll.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/m-03-scroll.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/m-04-scroll.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/m-05-scroll.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/m-06-scroll.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/r-01-hero.png",
+    "/Users/linusthofte/ai-resume-main/.shots/home/r-02-mid.png"
+  ],
+  "notes": [
+    "desktop FPS runs headless on a software GPU: treat it as a floor, not a measurement of real hardware",
+    "mobile runs at 4x CPU slowdown on slow 4G: mobile.vitals and mobile.scrollFps are the numbers that count",
+    "loadMs: ms from navigation to the load event, null if it had not fired after 30 s (desktop) or 60 s (phone); a heavy page takes long, while visitors see content at vitals.lcpMs. loaderMs: ms until the #loader ended, null when the page has none",
+    "settledMs: ms from navigation by which the first screen stopped changing, never before the fixed wait. null: still changing at the cap, either a long intro or continuous motion (a live shader, video); d-01-hero / m-01-hero tell which. reduced.moving: the screen was still changing 1.5 s after load with reduced motion on"
+  ],
+  "keyboard": {
+    "stops": [
+      "a \"Skip to content\"",
+      "a \"LT .\"",
+      "a \"Work\"",
+      "a \"About\"",
+      "a \"Music\"",
+      "a \"Tools\"",
+      "a \"Open Vidhra\"",
+      "a \"Open Kioku AI\"",
+      "button \"Ask AI about me\"",
+      "a \"Browse the process archive\"",
+      "a \"URHYMN HYMΝ Urhymn A pulse-forward home \"",
+      "a \"FUTURHYMN HYMΝ Futurhymn A wider field f\""
+    ],
+    "skipLinkFirst": true,
+    "noVisibleFocus": [],
+    "invisibleFocus": [],
+    "stuck": false
+  },
+  "hover": {
+    "targets": [
+      {
+        "shot": "h-01",
+        "label": "button \"Ask AI about me\"",
+        "interactive": true,
+        "primary": true,
+        "react": "moves",
+        "changed": [
+          "transform"
+        ]
+      },
+      {
+        "shot": "h-02",
+        "label": "button \"Show more\"",
+        "interactive": true,
+        "primary": true,
+        "react": "moves",
+        "changed": [
+          "color",
+          "backgroundColor",
+          "textDecorationColor",
+          "transform"
+        ]
+      },
+      {
+        "shot": "h-03",
+        "label": "a \"LT.\"",
+        "interactive": true,
+        "primary": true,
+        "react": "moves",
+        "changed": [
+          "transform"
+        ]
+      },
+      {
+        "shot": "h-04",
+        "label": "a \"Work\"",
+        "interactive": true,
+        "primary": true,
+        "react": "moves",
+        "changed": [
+          "color",
+          "textDecorationColor",
+          "transform"
+        ]
+      },
+      {
+        "shot": "h-05",
+        "label": "a \"Open Vidhra\"",
+        "interactive": true,
+        "primary": true,
+        "react": "moves",
+        "changed": [
+          "transform"
+        ]
+      },
+      {
+        "shot": "h-06",
+        "label": "a \"Browse the process archive\"",
+        "interactive": true,
+        "primary": true,
+        "react": "moves",
+        "changed": [
+          "transform"
+        ]
+      },
+      {
+        "shot": "h-07",
+        "label": "a \"urhymn Urhymn A pulse-forward home for r\"",
+        "interactive": true,
+        "primary": true,
+        "react": "moves",
+        "changed": [
+          "transform",
+          "translate"
+        ]
+      }
+    ],
+    "noHoverChange": [],
+    "colorOnly": [],
+    "covered": [],
+    "cursorFollower": false
+  },
+  "reduced": {
+    "hiddenText": 0,
+    "moving": false
+  },
+  "a11y": {
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "count": 1,
+        "nodes": [
+          ".contact-section > .score-kicker (#f1d8d2 on #b74335, 4:1, needs 4.5:1)"
+        ]
+      }
+    ],
+    "serious": 1,
+    "contrastNeedsReview": 20
+  }
+}

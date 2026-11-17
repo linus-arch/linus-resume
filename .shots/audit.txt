@@ -1,0 +1,6 @@
+FAIL  site                          a missing URL returned HTTP 200, not 404
+WARN  /                             only 7 words of visible text (thin content)
+
+1 pages crawled from http://127.0.0.1:4400/
+heaviest page /: ~251 KB | html 1 | JS 162 (gz) | CSS 15 (gz) | fonts 74 | images 0
+1 FAIL, 1 WARN

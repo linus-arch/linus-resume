@@ -1,15 +1,7 @@
-import { useState, useRef, useEffect } from "react";
-import { MessageSquare, Send, User, Bot } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { useEffect, useRef, useState } from "react";
+import { Bot, MessageSquare, Send, User } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { Button } from "@/components/ui/button";
 import { chatTitle, suggestedQuestions } from "@/config/resume-data";
 
 type Message = {
@@ -17,26 +9,16 @@ type Message = {
   content: string;
 };
 
-type AIChatDialogProps = {
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  showTrigger?: boolean;
-};
-
 const CHAT_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/chat`
   : "/api/chat";
 
-const AIChatDialog = ({ open, onOpenChange, showTrigger = true }: AIChatDialogProps) => {
-  const [internalOpen, setInternalOpen] = useState(false);
+const AIChatDialog = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  const isControlled = open !== undefined;
-  const dialogOpen = isControlled ? open : internalOpen;
-  const handleOpenChange = onOpenChange ?? setInternalOpen;
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -45,17 +27,29 @@ const AIChatDialog = ({ open, onOpenChange, showTrigger = true }: AIChatDialogPr
   }, [messages]);
 
   const streamChat = async (userMessages: Message[]) => {
-    const response = await fetch(CHAT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: userMessages }),
-    });
+    let response: Response;
+
+    try {
+      response = await fetch(CHAT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: userMessages }),
+      });
+    } catch {
+      throw new Error(
+        "The chat service is unreachable. When running locally, start the Vercel API runtime or use the deployed site.",
+      );
+    }
 
     if (!response.ok || !response.body) {
-      if (response.status === 429) {
-        throw new Error("Rate limited. Please try again in a moment.");
+      let message = `Chat request failed (${response.status}).`;
+      try {
+        const data = (await response.json()) as { error?: string };
+        if (data.error) message = data.error;
+      } catch {
+        // Keep the status-based message when the server does not return JSON.
       }
-      throw new Error("Failed to get response");
+      throw new Error(message);
     }
 
     const reader = response.body.getReader();
@@ -75,11 +69,10 @@ const AIChatDialog = ({ open, onOpenChange, showTrigger = true }: AIChatDialogPr
         textBuffer = textBuffer.slice(newlineIndex + 1);
 
         if (line.endsWith("\r")) line = line.slice(0, -1);
-        if (line.startsWith(":") || line.trim() === "") continue;
-        if (!line.startsWith("data: ")) continue;
+        if (line.startsWith(":") || line.trim() === "" || !line.startsWith("data: ")) continue;
 
         const jsonStr = line.slice(6).trim();
-        if (jsonStr === "[DONE]") break;
+        if (jsonStr === "[DONE]") continue;
 
         try {
           const parsed = JSON.parse(jsonStr);
@@ -89,18 +82,22 @@ const AIChatDialog = ({ open, onOpenChange, showTrigger = true }: AIChatDialogPr
             setMessages((prev) => {
               const last = prev[prev.length - 1];
               if (last?.role === "assistant") {
-                return prev.map((m, i) =>
-                  i === prev.length - 1 ? { ...m, content: assistantContent } : m
+                return prev.map((message, index) =>
+                  index === prev.length - 1 ? { ...message, content: assistantContent } : message,
                 );
               }
               return [...prev, { role: "assistant", content: assistantContent }];
             });
           }
         } catch {
-          textBuffer = line + "\n" + textBuffer;
+          textBuffer = `${line}\n${textBuffer}`;
           break;
         }
       }
+    }
+
+    if (!assistantContent) {
+      throw new Error("The chat service returned an empty response. Please try again.");
     }
   };
 
@@ -112,143 +109,92 @@ const AIChatDialog = ({ open, onOpenChange, showTrigger = true }: AIChatDialogPr
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
     setInput("");
+    setError(null);
     setIsLoading(true);
 
     try {
       await streamChat(newMessages);
-    } catch (error) {
-      console.error("Chat error:", error);
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: "Sorry, I encountered an error. Please try again." },
-      ]);
+    } catch (requestError) {
+      const message = requestError instanceof Error ? requestError.message : "The chat request failed.";
+      console.error("Chat error:", requestError);
+      setError(message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
       handleSend();
     }
   };
 
   return (
-    <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
-      {showTrigger && (
-        <DialogTrigger asChild>
-          <button className="btn-primary">
-            <MessageSquare className="w-4 h-4" />
-            Ask AI About Me
-          </button>
-        </DialogTrigger>
-      )}
-      <DialogContent className="sm:max-w-[480px] h-[560px] flex flex-col p-0 gap-0 bg-background border-border">
-        <DialogHeader className="px-5 py-3 border-b border-border">
-          <DialogTitle className="flex items-center gap-2 font-heading text-base">
-            <MessageSquare className="w-4 h-4 text-muted-foreground" />
-            {chatTitle}
-          </DialogTitle>
-        </DialogHeader>
+    <section className="ai-chat-panel" aria-labelledby="ai-chat-title">
+      <header className="ai-chat-panel__header">
+        <div>
+          <p className="score-kicker">Ask AI</p>
+          <h3 id="ai-chat-title">{chatTitle}</h3>
+        </div>
+        <MessageSquare aria-hidden="true" />
+      </header>
 
-        <ScrollArea className="flex-1 px-5 py-4" ref={scrollRef}>
-          {messages.length === 0 ? (
-            <div className="space-y-4">
-              <p className="text-muted-foreground text-sm">
-                Ask me anything about my background, skills, or whether I'd be a good fit for your role.
-              </p>
-              <div className="space-y-2">
-                <p className="text-xs text-muted-foreground uppercase tracking-wider">
-                  Suggested questions
-                </p>
-                {suggestedQuestions.map((q) => (
-                  <button
-                    key={q}
-                    onClick={() => handleSend(q)}
-                    className="block w-full text-left text-sm p-3 rounded-md border border-border hover:bg-muted transition-colors"
-                  >
-                    {q}
-                  </button>
-                ))}
+      <div className="ai-chat-panel__messages" ref={scrollRef} aria-live="polite">
+        {messages.length === 0 ? (
+          <div className="ai-chat-panel__empty">
+            <p>Ask me anything about my background, skills, projects, or fit for a role.</p>
+            <div className="ai-chat-panel__suggestions">
+              {suggestedQuestions.map((question) => (
+                <button key={question} type="button" onClick={() => handleSend(question)}>
+                  {question}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          messages.map((message, index) => (
+            <div className={`ai-chat-panel__message ai-chat-panel__message--${message.role}`} key={index}>
+              <span className="ai-chat-panel__avatar" aria-hidden="true">
+                {message.role === "assistant" ? <Bot /> : <User />}
+              </span>
+              <div>
+                {message.role === "assistant" ? (
+                  <div className="ai-chat-panel__markdown">
+                    <ReactMarkdown>{message.content}</ReactMarkdown>
+                  </div>
+                ) : (
+                  <p>{message.content}</p>
+                )}
               </div>
             </div>
-          ) : (
-            <div className="space-y-4">
-              {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                >
-                  {msg.role === "assistant" && (
-                    <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-                      <Bot className="w-3.5 h-3.5 text-muted-foreground" />
-                    </div>
-                  )}
-                  <div
-                    className={`max-w-[80%] rounded-md px-3 py-2 ${
-                      msg.role === "user"
-                        ? "bg-foreground text-background"
-                        : "bg-muted"
-                    }`}
-                  >
-                    {msg.role === "assistant" ? (
-                      <div className="prose prose-sm max-w-none dark:prose-invert">
-                        <ReactMarkdown>{msg.content}</ReactMarkdown>
-                      </div>
-                    ) : (
-                      <p className="text-sm">{msg.content}</p>
-                    )}
-                  </div>
-                  {msg.role === "user" && (
-                    <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-                      <User className="w-3.5 h-3.5 text-muted-foreground" />
-                    </div>
-                  )}
-                </div>
-              ))}
-              {isLoading && messages[messages.length - 1]?.role === "user" && (
-                <div className="flex gap-3">
-                  <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center">
-                    <Bot className="w-3.5 h-3.5 text-muted-foreground" />
-                  </div>
-                  <div className="bg-muted rounded-md px-3 py-2">
-                    <div className="flex gap-1">
-                      <span className="w-1.5 h-1.5 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                      <span className="w-1.5 h-1.5 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                      <span className="w-1.5 h-1.5 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </ScrollArea>
+          ))
+        )}
+        {isLoading && <p className="ai-chat-panel__status">Thinking...</p>}
+      </div>
 
-        <div className="p-4 border-t border-border">
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Ask about my experience..."
-              aria-label="Ask a question"
-              className="flex-1 bg-background border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-foreground/20"
-              disabled={isLoading}
-            />
-            <Button
-              onClick={() => handleSend()}
-              disabled={!input.trim() || isLoading}
-              size="icon"
-              className="shrink-0"
-            >
-              <Send className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+      {error && <p className="ai-chat-panel__error" role="alert">{error}</p>}
+
+      <form
+        className="ai-chat-panel__form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleSend();
+        }}
+      >
+        <input
+          type="text"
+          value={input}
+          onChange={(event) => setInput(event.target.value)}
+          placeholder="Ask about my experience..."
+          aria-label="Ask a question"
+          disabled={isLoading}
+        />
+        <Button type="submit" disabled={!input.trim() || isLoading} size="icon" aria-label="Send question">
+          <Send className="w-4 h-4" />
+        </Button>
+      </form>
+    </section>
   );
 };
 

@@ -8,6 +8,21 @@ const ALLOWED_ORIGINS = [
 
 const MAX_JOB_DESCRIPTION_LENGTH = 5000;
 
+function isLocalDevelopmentOrigin(origin: string): boolean {
+  if (process.env.VERCEL_ENV === "production") return false;
+  try {
+    const url = new URL(origin);
+    return url.protocol === "http:" && ["localhost", "127.0.0.1"].includes(url.hostname);
+  } catch {
+    return false;
+  }
+}
+
+function getAllowedOrigin(origin: string): string | null {
+  if (ALLOWED_ORIGINS.includes(origin) || isLocalDevelopmentOrigin(origin)) return origin;
+  return ALLOWED_ORIGINS[0] ?? null;
+}
+
 // Simple in-memory rate limiter (per edge instance)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_WINDOW_MS = 60_000;
@@ -28,10 +43,7 @@ function isRateLimited(ip: string): boolean {
 
 function getCorsHeaders(req: Request) {
   const origin = req.headers.get("origin") ?? "";
-  const allowedOrigin =
-    ALLOWED_ORIGINS.length > 0 && ALLOWED_ORIGINS.includes(origin)
-      ? origin
-      : ALLOWED_ORIGINS[0] ?? "*";
+  const allowedOrigin = getAllowedOrigin(origin) ?? "*";
 
   return {
     "Access-Control-Allow-Origin": allowedOrigin,

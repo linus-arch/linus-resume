@@ -1,21 +1,16 @@
-import { openExplorations } from "@/config/resume-data";
-import OpenExplorationCard from "./OpenExplorationCard";
+import OpenExplorationsCarousel from "./OpenExplorationsCarousel";
 
 const OpenExplorations = () => {
   return (
-    <section className="py-20 px-6 border-t border-border">
-      <div className="max-w-3xl mx-auto">
-        <h2 className="section-title">Open Explorations</h2>
-        <p className="text-sm text-muted-foreground mb-10 max-w-2xl leading-relaxed">
+    <section id="explorations" className="score-section explorations-section">
+      <div className="explorations-section__header">
+        <h2 className="score-heading">Open Explorations</h2>
+        <p className="score-lede">
           Ideas I'm actively exploring and evolving. If any of these resonate, let's collaborate.
         </p>
-
-        <div className="space-y-8">
-          {openExplorations.map((exploration) => (
-            <OpenExplorationCard key={exploration.title} {...exploration} />
-          ))}
-        </div>
       </div>
+
+      <OpenExplorationsCarousel />
     </section>
   );
 };
