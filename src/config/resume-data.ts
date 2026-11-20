@@ -133,8 +133,8 @@ An optional voice layer makes the interaction feel more natural for users who pr
 Vidhra is not just another chatbot. It is a practical career decision platform that combines coaching quality, product usability, and operational safety in one system.
 
 If the goal is to help more people make better career moves, faster, Vidhra is a strong and credible starting point.`,
-  image: "https://images.unsplash.com/photo-1516321318423-f06f70504504?w=1200&h=800&fit=crop",
-  link: "https://karriarvagvisarenvidhra.vercel.app/ ",
+  image: "/images/vidhra-preview.png",
+  link: "https://karriarvagvisarenvidhra.vercel.app/",
   collaboratorName: "Schreber Consulting",
   collaboratorLink: "https://www.schreber.se/",
     },
@@ -169,7 +169,7 @@ In terms of direction, the roadmap is centered on deepening user value rather th
 
 ### Bottom Line
 Kioku is a strong example of thoughtful AI product design: technology in service of a deeply human need. It is the kind of project that sparks conversation because it combines practical utility with emotional resonance, and shows how AI can support people in ways that feel personal and meaningful.`,
-      image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1200&h=800&fit=crop",
+      image: "/images/kioku-preview.png",
       link: "https://kioku-main.vercel.app/",
     },
   },
@@ -180,6 +180,20 @@ Kioku is a strong example of thoughtful AI product design: technology in service
     bullets: [
       "At Sana, I spent most of my time turning complex, often dry subject matter into something people actually wanted to engage with. Over 15 clients — ranging from EQT and Skandia to Frontify and Avepoint — I designed learning paths, built assessments, and produced the kind of multimedia content that makes compliance training feel less like a punishment. Getting a course to land well means understanding the person on the other end of it, and that instinct for usability and clarity has stayed with me across everything I've done since.",
     ],
+    showMore: {
+      description: `## Sana Labs | Instructional & Learning Design
+
+### Overview
+At Sana Labs, I turned complex subject matter into learning experiences people could understand, navigate, and complete. I worked across course design, assessments, multimedia production, and learning paths for more than 15 client organizations.
+
+### Work
+- Designed structured learning journeys for corporate clients, including EQT, Skandia, Frontify, and Avepoint.
+- Built assessments and interactive learning activities aligned with clear business and learner outcomes.
+- Created multimedia content that made compliance and technical topics more engaging and practical.
+- Applied cognitive science principles to improve clarity, retention, accessibility, and usability.`,
+      image: "/images/sana-labs-preview.png",
+      link: "https://sanalabs.com/?utm_term=sana%20labs&utm_campaign=Brand_Sana_SE_Search&utm_source=adwords&utm_medium=ppc&hsa_acc=4334994313&hsa_cam=19720918319&hsa_grp=149952511367&hsa_ad=675126626386&hsa_src=g&hsa_tgt=kwd-1599196745749&hsa_kw=sana%20labs&hsa_mt=e&hsa_net=adwords&hsa_ver=3&gad_source=1&gad_campaignid=19720918319&gbraid=0AAAAADHe6Yr-dL_HslZsLp1w7uaXnPZEL",
+    },
   },
   {
     company: "Malmö City",
@@ -385,9 +399,8 @@ And when enough threads are gathered, shared, and preserved, they form something
     image: "/explorations/vibable.png",
     collaboratorsNeeded: [],
     showMore: {
-      description: `Vibable is a Lovable project for vibe coding hardware products. It helps turn an idea into a concrete, buildable hardware design through an intuitive, AI-assisted workflow.`,
+      description: `Vibable is an AI-assisted workspace for turning hardware ideas into concrete, buildable designs through an intuitive workflow.`,
       stage: "Prototype",
-      link: "https://logic-nexus-engine.lovable.app",
     },
   },
   {
@@ -546,17 +559,17 @@ export const toolGroups: ToolGroup[] = [
   {
     category: "Music",
     description: "Sound design, arrangement, recording, and the small decisions that make an idea move.",
-    tools: ["Ableton Live", "Logic Pro X", "Max for Live", "Sound design", "Arrangement"],
+    tools: ["Ableton Live", "Logic Pro X", "Max for Live", "Sound design"],
   },
   {
     category: "UX",
     description: "Turning complex systems into interfaces people can read, use, and return to.",
-    tools: ["Figma", "Adobe Creative Suite", "UX research", "Prototyping"],
+    tools: ["Figma", "Adobe Creative Suite", "Maze", "Miro", "Claude Design"],
   },
   {
     category: "Coding",
     description: "Product-minded implementation across the interface, data, and AI layers.",
-    tools: ["TypeScript", "React", "Next.js", "Vite", "Supabase", "PostgreSQL", "AI SDK", "Tailwind CSS"],
+    tools: ["TypeScript", "React", "Next.js", "Vite", "Supabase", "PostgreSQL", "Tailwind CSS"],
   },
 ];
 
